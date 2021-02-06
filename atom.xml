@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://VicyCao.github.io</id>
     <title>VicyCao</title>
-    <updated>2021-02-06T07:42:27.809Z</updated>
+    <updated>2021-02-06T07:54:18.935Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://VicyCao.github.io"/>
     <link rel="self" href="https://VicyCao.github.io/atom.xml"/>
@@ -36,7 +36,7 @@
 3、若RCT研究不可行，仅有病例组（有外部对照组），甚至只有病例报告，此时需要考虑替代的研究方法。</p>
 <p>  以上情况通常是以结果不确定性的增加为代价的，包括了有效性、安全性和获益风险评估的不确定性。此时，对于事后审批来说，后续的随访数据额外重要。我们需要在相对少量的高质量证据（如小型随机试验）和相对大量的低质量证据（如大型无对照病例报告系列）两者之间作出权衡。这需要根据研究的具体情况具体评估。</p>
 <p>  本指南阐述了以下问题：<br>
-1、可以提高设计或分析效率的方法；<br>
+1、可以提高设计或分析效率的方法<br>
 2、常规方法不适用情况下的方法<br>
 主要介绍了一般的原则，本指南并不能做到面面俱到，但我们鼓励应进一步探索潜在的适用于特定情况的方法。</p>
 <p>  一般而言，适用于大人群研究的指南适用于小人群研究。任何与已发布指南相偏离的情况应前瞻性考虑，在研究方案中加以论证，在研究报告中详细讨论。<br>
