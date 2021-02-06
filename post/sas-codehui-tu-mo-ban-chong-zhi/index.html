@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>写在开通个人博客的第一天 | VicyCao</title>
+<title>SAS code：绘图模板重置 | VicyCao</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,11 +18,12 @@
 
 
 
-    <meta name="description" content="大家好，我是VicyCao，一名非典型生物统计师😃
+    <meta name="description" content="关注一个SAS绘图模板重置的小问题
 
-一直想找个平台写点东西用于记录自己的生活与工作感悟，考虑本人呢，比较喜欢独立与自由，不喜欢被各种现有的平台捆绑，因为现成平台上很多的广告与无关链接会大大降低阅读的体验感。
-查了不少资料..." />
-    <meta name="keywords" content="随遇而安" />
+接触过SAS的童鞋都知道，SAS自带的绘图效果极丑（这里指不经proc sgplot或Macro修饰过的原图），具体感受可通过观看以下生存曲线图像获得：
+
+🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣�..." />
+    <meta name="keywords" content="代码示例" />
   </head>
   <body>
     <div id="app" class="main">
@@ -87,30 +88,33 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">写在开通个人博客的第一天</h2>
-            <div class="post-date">2021-02-05</div>
+            <h2 class="post-title">SAS code：绘图模板重置</h2>
+            <div class="post-date">2021-02-09</div>
             
             <div class="post-content" v-pre>
-              <p>大家好，我是VicyCao，一名非典型生物统计师😃</p>
+              <p>关注一个SAS绘图模板重置的小问题</p>
 <!-- more -->
-<p>一直想找个平台写点东西用于记录自己的生活与工作感悟，考虑本人呢，比较喜欢独立与自由，不喜欢被各种现有的平台捆绑，因为现成平台上很多的广告与无关链接会大大降低阅读的体验感。</p>
-<p>查了不少资料，遂决定自己搭个博客来记录我的工作与生活点滴，由于不是计算机出身，加上我对博客的要求也不需要太高，可以上传含文字和图片的博文就行，最后选了Gridea+Github。你能看到我目前写的这段文字，就说明我摸索着搭成功了😎</p>
-<p>唯一的缺点就是访问会有点慢，后面等内容丰富了我再想办法解决访问速度过慢的问题。</p>
-<p>回归正题，开通这个博客后主要会做些什么：<br>
-1、结合自己平时接手的临床试验项目，总结数据分析过程中遇到的统计学问题与解答探索<br>
-2、不定期更新对FDA、EMA发布的统计学相关指导原则进行的中文解读<br>
-3、不定期更新对肿瘤领域临床试验文章的统计学解读<br>
-4、偶尔的工作与生活感悟</p>
-<p>理想很丰满，现实很骨感，博客的更新需要持之以恒的毅力，希望自己有始有终，欢迎大家监督。</p>
-<p>由于目前还未开通评论功能，如果地球上某个角落的你不小心瞥到了我写的博文，然后不小心有一些疑问需要沟通，欢迎给我发邮件讨论：seucaowx26@126.com</p>
-<p>😊😊😊</p>
+<p>接触过SAS的童鞋都知道，SAS自带的绘图效果极丑（这里指不经proc sgplot或Macro修饰过的原图），具体感受可通过观看以下生存曲线图像获得：<br>
+<img src="https://VicyCao.github.io/post-images/1612600347491.png" alt="" loading="lazy"><br>
+🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣</p>
+<p>有时为了做大会的壁报或者文章投稿需要，会编写SAS的Macro重新绘制颜值较高的生存曲线图像，此时会发现后续只要跑proc lifetest程序，SAS的HTML输出页面就都是Macro设置的图像样式，这时候想查看SAS原始自带的图像就有点犯难，毕竟有些奇葩杂志会要求提供未经修饰的SAS原图作为投稿的补充材料。</p>
+<p>这个时候部门的MA小伙伴就满眼期待地望着我，希望我能帮忙提供原始图像。在我第一次遇到MA小伙伴求助此类问题时，我的内心是慌张的，毕竟我都跑过那么多次Macro了，原始图像的样式早就模糊了，也不知道从哪里再倒腾出来，但还是要干啊，通过查资料，发现几行代码就可以解决这个小问题：</p>
+<p><strong>SAS code如下：</strong><br>
+、、、<br>
+ods path sashelp.tmplmst (read);<br>
+proc datasets library=sasuser nolist;<br>
+  delete templat (memtype=itemstor);<br>
+run;<br>
+ods path reset;<br>
+、、、</p>
+<p>虽然是个小问题，但是觉得还是值得记录一下的，SAS大佬请忽略😂</p>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://VicyCao.github.io/tag/I5usyTrKp/" class="tag">
-                    随遇而安
+                  <a href="https://VicyCao.github.io/tag/KPObp76E1/" class="tag">
+                    代码示例
                   </a>
                 
               </div>
@@ -118,9 +122,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://VicyCao.github.io/post/hello-gridea/">
+                <a href="https://VicyCao.github.io/post/ema-guidelineclinical-trials-in-small-populations/">
                   <h3 class="post-title">
-                    Hello Gridea
+                    EMA Guideline：Clinical Trials in Small Populations
                   </h3>
                 </a>
               </div>

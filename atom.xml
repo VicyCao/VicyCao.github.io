@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://VicyCao.github.io</id>
     <title>VicyCao</title>
-    <updated>2021-02-06T07:54:54.755Z</updated>
+    <updated>2021-02-06T08:49:43.023Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://VicyCao.github.io"/>
     <link rel="self" href="https://VicyCao.github.io/atom.xml"/>
@@ -10,6 +10,32 @@
     <logo>https://VicyCao.github.io/images/avatar.png</logo>
     <icon>https://VicyCao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, VicyCao</rights>
+    <entry>
+        <title type="html"><![CDATA[SAS code：绘图模板重置]]></title>
+        <id>https://VicyCao.github.io/post/sas-codehui-tu-mo-ban-chong-zhi/</id>
+        <link href="https://VicyCao.github.io/post/sas-codehui-tu-mo-ban-chong-zhi/">
+        </link>
+        <updated>2021-02-09T08:27:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>关注一个SAS绘图模板重置的小问题</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>关注一个SAS绘图模板重置的小问题</p>
+<!-- more -->
+<p>接触过SAS的童鞋都知道，SAS自带的绘图效果极丑（这里指不经proc sgplot或Macro修饰过的原图），具体感受可通过观看以下生存曲线图像获得：<br>
+<img src="https://VicyCao.github.io/post-images/1612600347491.png" alt="" loading="lazy"><br>
+🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣</p>
+<p>有时为了做大会的壁报或者文章投稿需要，会编写SAS的Macro重新绘制颜值较高的生存曲线图像，此时会发现后续只要跑proc lifetest程序，SAS的HTML输出页面就都是Macro设置的图像样式，这时候想查看SAS原始自带的图像就有点犯难，毕竟有些奇葩杂志会要求提供未经修饰的SAS原图作为投稿的补充材料。</p>
+<p>这个时候部门的MA小伙伴就满眼期待地望着我，希望我能帮忙提供原始图像。在我第一次遇到MA小伙伴求助此类问题时，我的内心是慌张的，毕竟我都跑过那么多次Macro了，原始图像的样式早就模糊了，也不知道从哪里再倒腾出来，但还是要干啊，通过查资料，发现几行代码就可以解决这个小问题：</p>
+<p><strong>SAS code如下：</strong><br>
+、、、<br>
+ods path sashelp.tmplmst (read);<br>
+proc datasets library=sasuser nolist;<br>
+  delete templat (memtype=itemstor);<br>
+run;<br>
+ods path reset;<br>
+、、、</p>
+<p>虽然是个小问题，但是觉得还是值得记录一下的，SAS大佬请忽略😂</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[EMA Guideline：Clinical Trials in Small Populations]]></title>
         <id>https://VicyCao.github.io/post/ema-guidelineclinical-trials-in-small-populations/</id>
