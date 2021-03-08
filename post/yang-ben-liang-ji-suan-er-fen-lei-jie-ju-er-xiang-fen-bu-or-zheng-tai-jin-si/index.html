@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>样本量计算：二分类结局（二项分布or正态近似） | VicyCao</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://VicyCao.github.io/favicon.ico?v=1615169429599">
+<link rel="stylesheet" href="https://VicyCao.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="肿瘤临床试验经常以ORR作为主要终点，在计算样本量时会面临使用二项分布还是正态近似的选择，个人建议如果实在把握不准，选二项分布肯定不会错，那么，使用正态近似一定会出现问题吗？
+
+IIT研究现在这么受欢迎，有个很重要的原因就是若进行单臂试验，..." />
+    <meta name="keywords" content="正经课堂" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://VicyCao.github.io">
+        <img src="https://VicyCao.github.io/images/avatar.png?v=1615169429599" class="site-logo">
+        <h1 class="site-title">VicyCao</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://VicyCao.github.io/archives" class="site-nav">
+            文章
+          </a>
+        
+      
+        
+          <a href="https://VicyCao.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      一名非典型生物统计师
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://VicyCao.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">样本量计算：二分类结局（二项分布or正态近似）</h2>
+            <div class="post-date">2021-02-10</div>
+            
+            <div class="post-content" v-pre>
+              <p>肿瘤临床试验经常以ORR作为主要终点，在计算样本量时会面临使用二项分布还是正态近似的选择，个人建议如果实在把握不准，选二项分布肯定不会错，那么，使用正态近似一定会出现问题吗？</p>
+<!-- more -->
+<p>IIT研究现在这么受欢迎，有个很重要的原因就是若进行单臂试验，样本量较少，绝大多数的临床医生在能力范围内都可以尝试去做。单臂研究的主要终点一般建议选择以ORR为代表的率类指标，至于为什么不建议选择以PFS为代表的时间事件型指标，后面会专门写一篇文章详细介绍。</p>
+<h1 id="一-二项分布与正态分布的联系">一、二项分布与正态分布的联系</h1>
+<p>由中心极限定理：棣莫弗-拉普拉斯中心极限定理（De Moivre-Laplace），即二项分布以正态分布为其极限分布定律。什么意思？就是n如果足够大，二项分布就活成了正态分布的样子，给大家放张图感受一下：<br>
+<img src="https://VicyCao.github.io/post-images/1612676493275.png" alt="" loading="lazy"><br>
+以上为二项分布的PDF函数，即概率密度函数。<br>
+如图所示，n取10000，p取0.5，这张图是不是有正态分布曲线内味儿了😏</p>
+<h1 id="二-二项分布与正态分布的区别">二、二项分布与正态分布的区别</h1>
+<p>两者当然有区别，首先名字就不一样（开个玩笑）😂<br>
+二项分布针对离散变量，正态分布针对连续变量，两者描述的数据类型不一样。顺便回顾一下，对于离散变量，我们在做描述性分析时，一般通过计算构成比，比如，想要查看某个临床试验中受试者的性别分布状况，我们会分别计算试验组和对照组中男性和女性的构成比，通过卡方检验或Fisher精确检验比较两组的性别分布差异；对于连续变量，我们在做描述性分析时，一般需要根据数据的分布状态决定使用哪些指标来描述，如果数据呈正态分布，一般使用平均值±标准差的形式，如果数据不满足正态分布或存在较多的异常值，一般考虑使用中位数（极差或四分位数间距）的形式，如果想进行两组间的比较，我们可以考虑使用t检验或秩和检验（具体要看数据是否满足检验方法的使用条件）。<br>
+好像跑偏了，回归正题，在以ORR为代表的二分类结局试验的样本量计算中，为何会存在二项分布与正态近似的选择，归根到底是因为大家对正态分布太熟悉了，既然根据中心极限定理，二项分布的极限就是正态分布，索性就直接当成正态分布处理了，可以查表计算概率，相比二项分布的繁重计算过程（当然现在很多软件都可以计算），正态近似的处理过程显得格外香。<br>
+<strong>本科教材上给的两者近似处理的条件：当np和n(1-p)均较大时（通常要求np&gt;5, n(1-p)&gt;5, n&gt;40），二项分布逐渐逼近均数为np，方差为np(1-p)的正态分布。</strong><br>
+根据博主平时接触到的资料总结，这个判断标准不一，另外还有诸如<strong>np和n(1-p)均大于10</strong>的条件。具体可以在面对实际问题的时候具体考虑。<br>
+由以上一段可得：到底选择二项分布还是正态近似与<strong>n</strong>和<strong>p</strong>都有关系。</p>
+<h1 id="三-数据模拟">三、数据模拟</h1>
+<p>构建n和p的不同取值组合，考察使用正态近似代替二项分布需要满足的条件。</p>
+<h2 id="31-n取30p取不同的值">3.1 n取30，p取不同的值</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">n</th>
+<th style="text-align:center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.1</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.2</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.3</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.4</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.5</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.6</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.7</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.8</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.9</td>
+</tr>
+</tbody>
+</table>
+<p>给出二项分布图像<br>
+<img src="https://VicyCao.github.io/post-images/1612682439013.png" alt="" loading="lazy"></p>
+<h2 id="32-n取50p取不同的值">3.2 n取50，p取不同的值</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">n</th>
+<th style="text-align:center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.1</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.2</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.3</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.4</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.5</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.6</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.7</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.8</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.9</td>
+</tr>
+</tbody>
+</table>
+<p>给出二项分布图像<br>
+<img src="https://VicyCao.github.io/post-images/1614659950823.png" alt="" loading="lazy"></p>
+<h2 id="33-n取100p取不同的值">3.3 n取100，p取不同的值</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">n</th>
+<th style="text-align:center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.1</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.2</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.3</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.4</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.5</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.6</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.7</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.8</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.9</td>
+</tr>
+</tbody>
+</table>
+<p>给出二项分布图像<br>
+<img src="https://VicyCao.github.io/post-images/1614661595117.png" alt="" loading="lazy"></p>
+<h2 id="34-n取300p取不同的值">3.4 n取300，p取不同的值</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">n</th>
+<th style="text-align:center">p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.1</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.2</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.3</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.4</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.5</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.6</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.7</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.8</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.9</td>
+</tr>
+</tbody>
+</table>
+<p>给出二项分布图像<br>
+<img src="https://VicyCao.github.io/post-images/1614662740249.png" alt="" loading="lazy"></p>
+<h2 id="35-模拟结果说明">3.5 模拟结果说明</h2>
+<p>从上面的数据模拟结果可以看出来，<strong>n</strong>和<strong>p</strong>取值的不同组合对二项分布图像有很大影响。<br>
+当<strong>n</strong>增大到一定程度时，比如<strong>n=100</strong>时，即使<strong>p</strong>取较极端的值，如0.1或0.9，此时的二项分布图像已逐渐逼近正态分布的图像；<br>
+当<strong>n</strong>取值较小时，如<strong>n=50</strong>，可以观察发现此时<strong>p</strong>若取值0.1或0.9，二项分布图像呈现明显的偏态分布，此时若使用正态分布近似求值，会存在较大的偏差；<br>
+更极端的时候，如<strong>n=30</strong>，此时<strong>p</strong>的取值差异对二项分布的图像影响更大，这也就从比较直观的层面解释了小样本研究若以二分类结局为终点，慎重选择使用正态近似的方法计算样本量，使用二项分布的原理计算样本量更加精确。</p>
+<h1 id="四-具体概率计算">四、具体概率计算</h1>
+<p>上面是从分布图像的角度解释了两者的差异，方法较为主观，不同读者对同一图像的观察存在差异，下面从具体概率计算的角度去阐述二项分布与正态近似的结果差异。</p>
+<h2 id="41-二项分布与正态分布的对比">4.1 二项分布与正态分布的对比</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">n</th>
+<th style="text-align:center">p</th>
+<th style="text-align:center">x</th>
+<th style="text-align:center">prob(二项分布)</th>
+<th style="text-align:center">prob(正态分布)</th>
+<th style="text-align:center">改变值</th>
+<th style="text-align:center">改变相对比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.1</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">0.6474392</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.1474392</td>
+<td style="text-align:center">0.2277267</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">0.5722322</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.07223222</td>
+<td style="text-align:center">0.1262289</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.8</td>
+<td style="text-align:center">24</td>
+<td style="text-align:center">0.5724876</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.07248756</td>
+<td style="text-align:center">0.1266186</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.1</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">0.616123</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.116123</td>
+<td style="text-align:center">0.1884737</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">25</td>
+<td style="text-align:center">0.5561376</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.05613759</td>
+<td style="text-align:center">0.1009419</td>
+</tr>
+<tr>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.8</td>
+<td style="text-align:center">40</td>
+<td style="text-align:center">0.5562596</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.05625959</td>
+<td style="text-align:center">0.1011391</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.1</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">0.5831555</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.08315551</td>
+<td style="text-align:center">0.1425958</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">50</td>
+<td style="text-align:center">0.5397946</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.03979462</td>
+<td style="text-align:center">0.07372178</td>
+</tr>
+<tr>
+<td style="text-align:center">100</td>
+<td style="text-align:center">0.8</td>
+<td style="text-align:center">80</td>
+<td style="text-align:center">0.5398386</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.03983863</td>
+<td style="text-align:center">0.07379729</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.1</td>
+<td style="text-align:center">30</td>
+<td style="text-align:center">0.5484187</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.04841872</td>
+<td style="text-align:center">0.08828787</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">150</td>
+<td style="text-align:center">0.5230138</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.02301376</td>
+<td style="text-align:center">0.0440022</td>
+</tr>
+<tr>
+<td style="text-align:center">300</td>
+<td style="text-align:center">0.8</td>
+<td style="text-align:center">240</td>
+<td style="text-align:center">0.5230223</td>
+<td style="text-align:center">0.5</td>
+<td style="text-align:center">0.02302234</td>
+<td style="text-align:center">0.04401789</td>
+</tr>
+</tbody>
+</table>
+<h2 id="42-对比结论">4.2 对比结论</h2>
+<p>根据上面的模拟结果，可以得出一个大致的规律是：<br>
+<strong>1、n越小，使用正态近似代替二项分布带来的偏差越大</strong><br>
+<strong>2、n相等的情况下，p越靠近0或1，使用正态近似代替二项分布带来的偏差越大</strong><br>
+<strong>3、如果改变相对比小于5%为一个可以接受的误差范围，100以内均不适宜使用正态近似代替二项分布</strong></p>
+<h1 id="五-样本量计算的实际应用">五、样本量计算的实际应用</h1>
+<p>使用PASS软件（试用版）进行单臂试验样本量估算模拟，考察在实际应用中，小样本量计算方法的选择差异<br>
+<strong>α取单侧0.025，β取0.2</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">p(参照)</th>
+<th style="text-align:center">p(预估)</th>
+<th style="text-align:center">n(二项分布)</th>
+<th style="text-align:center">n(正态近似)</th>
+<th style="text-align:center">差值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0.10</td>
+<td style="text-align:center">0.20</td>
+<td style="text-align:center">94</td>
+<td style="text-align:center">86</td>
+<td style="text-align:center">8</td>
+</tr>
+<tr>
+<td style="text-align:center">0.10</td>
+<td style="text-align:center">0.30</td>
+<td style="text-align:center">33</td>
+<td style="text-align:center">24</td>
+<td style="text-align:center">9</td>
+</tr>
+<tr>
+<td style="text-align:center">0.20</td>
+<td style="text-align:center">0.30</td>
+<td style="text-align:center">144</td>
+<td style="text-align:center">137</td>
+<td style="text-align:center">7</td>
+</tr>
+<tr>
+<td style="text-align:center">0.20</td>
+<td style="text-align:center">0.40</td>
+<td style="text-align:center">41</td>
+<td style="text-align:center">36</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:center">0.30</td>
+<td style="text-align:center">0.40</td>
+<td style="text-align:center">183</td>
+<td style="text-align:center">172</td>
+<td style="text-align:center">11</td>
+</tr>
+<tr>
+<td style="text-align:center">0.30</td>
+<td style="text-align:center">0.50</td>
+<td style="text-align:center">47</td>
+<td style="text-align:center">44</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">0.40</td>
+<td style="text-align:center">0.50</td>
+<td style="text-align:center">195</td>
+<td style="text-align:center">191</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">0.40</td>
+<td style="text-align:center">0.60</td>
+<td style="text-align:center">49</td>
+<td style="text-align:center">48</td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以发现，使用正态近似估算样本量，相比使用二项分布总是偏少，更推荐的方法是在估算样本量的时候，使用二项分布与正态近似都算一遍，评估两者的差异是不是在可以接受的范围内，个人建议针对小样本的研究，如数量小于50，优先选择使用二项分布的方法估算样本量，数量若大于50，可以视研究开展的实际情况评估两种方法的结果差异，选择最适合研究方案的计算方法。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://VicyCao.github.io/tag/Sm4J3d9D8/" class="tag">
+                    正经课堂
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://VicyCao.github.io/post/sas-codehui-tu-mo-ban-chong-zhi/">
+                  <h3 class="post-title">
+                    SAS code：绘图模板重置
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
