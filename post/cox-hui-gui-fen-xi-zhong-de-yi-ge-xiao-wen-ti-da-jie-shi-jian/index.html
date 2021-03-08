@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Cox回归分析中的一个小问题：“打结”时间 | VicyCao</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://VicyCao.github.io/favicon.ico?v=1615183054393">
+<link rel="stylesheet" href="https://VicyCao.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="在生存分析中，我们一般使用Cox回归分析估计治疗效果，计算HR及95%置信区间，如果出现了相同的事件时间，即“打结”时间，有什么需要特殊注意的细节吗？
+
+2020年12月，CDE颁布《抗肿瘤药物临床试验统计学设计指导原则》（试行），其中在疗..." />
+    <meta name="keywords" content="指南解读" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://VicyCao.github.io">
+        <img src="https://VicyCao.github.io/images/avatar.png?v=1615183054393" class="site-logo">
+        <h1 class="site-title">VicyCao</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://VicyCao.github.io/archives" class="site-nav">
+            文章
+          </a>
+        
+      
+        
+          <a href="https://VicyCao.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      一名非典型生物统计师
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://VicyCao.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Cox回归分析中的一个小问题：“打结”时间</h2>
+            <div class="post-date">2021-02-11</div>
+            
+            <div class="post-content" v-pre>
+              <p>在生存分析中，我们一般使用Cox回归分析估计治疗效果，计算HR及95%置信区间，如果出现了相同的事件时间，即“打结”时间，有什么需要特殊注意的细节吗？</p>
+<!-- more -->
+<p>2020年12月，CDE颁布《抗肿瘤药物临床试验统计学设计指导原则》（试行），其中在疗效终点PFS的阐述中，出现了一句话：<strong>受试者遵循的相同评估时间表也会导致相同的事件时间，在Cox 回归模型下估计治疗效果时，推荐使用精确（或近似精确）方法处理相同的事件时间。</strong><br>
+这篇文章主要介绍打结数据的概念及处理方法对比。</p>
+<h1 id="一-何为打结">一、何为“打结”</h1>
+<p><strong>数据存在打结是指有多个个体有相同的失效时间。</strong><br>
+我们都知道，生存资料是比较特殊的资料，既有时间又有结局，在发生终点事件的患者中，很可能存在时间相同的情况。</p>
+<h1 id="二-打结数据的处理方法">二、“打结”数据的处理方法</h1>
+<p>针对这一情况，Cox回归模型有四种常见的方法来处理打结数据，分别为：<br>
+<strong>Exact、Discrete、Efron、Breslow</strong><br>
+其中：<br>
+Exact和discrete的结果较为精确，但是计算时间较长；Efron、Breslow用时短，但参数估计偏差较大。<br>
+Breslow计算比较简便，是目前大多数软件默认的处理Cox模型打结数据的方法，比如<strong>SAS</strong>；<br>
+但在R软件的survival包中，默认的方法是Efron。<br>
+熟悉Keynote系列研究的会注意到，Keynote系列研究更偏向使用Efron处理打结数据，在文献的统计方法学部分会说明的很清楚。</p>
+<h1 id="三-四种方法如何选择">三、四种方法如何选择</h1>
+<p>1）样本量较小（<strong>n≤1000</strong>），不同程度的打结，四种方法的估计时间都很短，此时<strong>Breslow</strong>会低估参数绝对值且偏差较大，<strong>Efron</strong>表现好于<strong>Breslow</strong>，<strong>Discrete</strong>会高估参数绝对值。但还是建议使用<strong>Exact</strong>来获得最为精确的估计，由于R软件的survival包没有包括该方法，可以使用SAS软件的PHREG选择<strong>exact</strong>。<br>
+2）样本量较大（<strong>n≥100,000</strong>），<strong>Exact</strong>的计算时间迅速增加，打结程度高时个人的电脑可能出现内存不足无法利用SAS 运算该方法的情形，此时可以考虑使用<strong>Discrete</strong>，计算时间不到<strong>Exact</strong>的一半。考虑到样本量较大，各种方法的偏差都小，更推荐使用<strong>Breslow</strong>和<strong>Efron</strong>，在样本量为100,000 且打结程度最高时（平均每个时间点有1000 个个体），运算时间仍不超过1 秒钟，其中<strong>Efron</strong>更加精确。如果时间上没有限制，可以使用<strong>Exact</strong>或<strong>Discrete</strong>，得到更好的拟合统计量结果和更准确的参数估计结果。</p>
+<h1 id="四-sas中的代码实现">四、SAS中的代码实现</h1>
+<pre><code class="language-SAS">proc phreg data=survival;
+    model PFS*PDYN(0)=Group /risklimits ties=exact;   /*ties指定选择使用的方法*/
+run;
+</code></pre>
+<p>本文参考文献：张文丽等，运用Cox模型时打结数据的处理方法探讨。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://VicyCao.github.io/tag/EQvYTgXgl/" class="tag">
+                    指南解读
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://VicyCao.github.io/post/yang-ben-liang-ji-suan-er-fen-lei-jie-ju-er-xiang-fen-bu-or-zheng-tai-jin-si/">
+                  <h3 class="post-title">
+                    样本量计算：二分类结局（二项分布or正态近似）
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
