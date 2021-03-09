@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>写在开通个人博客的第一天 | VicyCao</title>
+<title>R code：二阶段设计的样本量计算 | VicyCao</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,11 +18,10 @@
 
 
 
-    <meta name="description" content="大家好，我是VicyCao，一名非典型生物统计师😃
+    <meta name="description" content="由于可以提前因无效终止试验，Simon二阶段设计很受临床医生的欢迎，如何在开源软件R语言中计算Simon二阶段设计的样本量呢？
 
-一直想找个平台写点东西用于记录自己的生活与工作感悟，考虑本人呢，比较喜欢独立与自由，不喜欢被各种现有的平台捆绑，因为现成平台上很多的广告与无关链接会大大降低阅读的体验感。
-查了不少资料..." />
-    <meta name="keywords" content="随遇而安" />
+R语言因开源、灵活得以在临床试验中广泛使用，其中最突出的优点就是开发者可以上传自己写的包来实现特定问题的计算。..." />
+    <meta name="keywords" content="代码示例" />
   </head>
   <body>
     <div id="app" class="main">
@@ -87,30 +86,39 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">写在开通个人博客的第一天</h2>
-            <div class="post-date">2021-01-01</div>
+            <h2 class="post-title">R code：二阶段设计的样本量计算</h2>
+            <div class="post-date">2021-02-12</div>
             
             <div class="post-content" v-pre>
-              <p>大家好，我是VicyCao，一名非典型生物统计师😃</p>
+              <p>由于可以提前因无效终止试验，Simon二阶段设计很受临床医生的欢迎，如何在开源软件R语言中计算Simon二阶段设计的样本量呢？</p>
 <!-- more -->
-<p>一直想找个平台写点东西用于记录自己的生活与工作感悟，考虑本人呢，比较喜欢独立与自由，不喜欢被各种现有的平台捆绑，因为现成平台上很多的广告与无关链接会大大降低阅读的体验感。</p>
-<p>查了不少资料，遂决定自己搭个博客来记录我的工作与生活点滴，由于不是计算机出身，加上我对博客的要求也不需要太高，可以上传含文字和图片的博文就行，最后选了Gridea+Github。你能看到我目前写的这段文字，就说明我摸索着搭成功了😎</p>
-<p>唯一的缺点就是访问会有点慢，后面等内容丰富了我再想办法解决访问速度过慢的问题。</p>
-<p>回归正题，开通这个博客后主要会做些什么：<br>
-1、结合自己平时接手的临床试验项目，总结数据分析过程中遇到的统计学问题与解答探索<br>
-2、不定期更新对FDA、EMA发布的统计学相关指导原则进行的中文解读<br>
-3、不定期更新对肿瘤领域临床试验文章的统计学解读<br>
-4、偶尔的工作与生活感悟</p>
-<p>理想很丰满，现实很骨感，博客的更新需要持之以恒的毅力，希望自己有始有终，欢迎大家监督。</p>
-<p>由于目前还未开通评论功能，如果地球上某个角落的你不小心瞥到了我写的博文，然后不小心有一些疑问需要沟通，欢迎给我发邮件讨论：seucaowx26@126.com</p>
-<p>😊😊😊</p>
+<p>R语言因开源、灵活得以在临床试验中广泛使用，其中最突出的优点就是开发者可以上传自己写的包来实现特定问题的计算。</p>
+<p>Simon二阶段设计的样本量计算同样可以在R语言中轻松实现：<br>
+<strong>R Code如下：</strong></p>
+<pre><code class="language-R">install.packages(&quot;ph2mult&quot;)    #首先安装R包ph2mult
+library(ph2mult)                      #加载包
+binom.design(type = &quot;admissible&quot;, p0 = 0.05, p1 = 0.15, 
+             signif.level = 0.05, power.level = 0.8,
+             plot.out = TRUE)
+</code></pre>
+<p>其中：<br>
+type = &quot;admissible&quot;：列出推荐使用的样本量计算结果<br>
+p0 = 0.05：历史参照率值（二分类结局指标，如ORR）<br>
+p1 = 0.15：预估本试验的率值<br>
+signif.level = 0.05：单侧α为0.05（Simon二阶段设计默认为单侧检验）<br>
+power.level = 0.8：检验效能为0.8，对应β为0.2<br>
+plot.out = TRUE：生成以总样本量为横坐标、期望样本量为纵坐标的折线图</p>
+<p><strong>结果如下：</strong><br>
+<img src="https://VicyCao.github.io/post-images/1615279531395.JPG" alt="" loading="lazy"><br>
+以Optimal设计为例，试验设计流程如下：<br>
+<strong>第一阶段需入组23人，若≤1人出现缓解，试验停止，若＞1人出现缓解，试验进入第二阶段；第二阶段需入组33人，若在所有的56名患者中（包括第一阶段和第二阶段），有≤5人出现缓解，则试验失败，若＞5人出现缓解，则试验成功。</strong></p>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://VicyCao.github.io/tag/I5usyTrKp/" class="tag">
-                    随遇而安
+                  <a href="https://VicyCao.github.io/tag/KPObp76E1/" class="tag">
+                    代码示例
                   </a>
                 
               </div>
@@ -118,9 +126,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://VicyCao.github.io/post/hello-gridea/">
+                <a href="https://VicyCao.github.io/post/cox-hui-gui-fen-xi-zhong-de-yi-ge-xiao-wen-ti-da-jie-shi-jian/">
                   <h3 class="post-title">
-                    Hello Gridea
+                    Cox回归分析中的一个小问题：“打结”时间
                   </h3>
                 </a>
               </div>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://VicyCao.github.io</id>
     <title>VicyCao</title>
-    <updated>2021-03-09T00:48:49.992Z</updated>
+    <updated>2021-03-09T08:49:57.372Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://VicyCao.github.io"/>
     <link rel="self" href="https://VicyCao.github.io/atom.xml"/>
@@ -10,6 +10,38 @@
     <logo>https://VicyCao.github.io/images/avatar.png</logo>
     <icon>https://VicyCao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, VicyCao</rights>
+    <entry>
+        <title type="html"><![CDATA[R code：二阶段设计的样本量计算]]></title>
+        <id>https://VicyCao.github.io/post/r/</id>
+        <link href="https://VicyCao.github.io/post/r/">
+        </link>
+        <updated>2021-02-12T08:28:52.000Z</updated>
+        <summary type="html"><![CDATA[<p>由于可以提前因无效终止试验，Simon二阶段设计很受临床医生的欢迎，如何在开源软件R语言中计算Simon二阶段设计的样本量呢？</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>由于可以提前因无效终止试验，Simon二阶段设计很受临床医生的欢迎，如何在开源软件R语言中计算Simon二阶段设计的样本量呢？</p>
+<!-- more -->
+<p>R语言因开源、灵活得以在临床试验中广泛使用，其中最突出的优点就是开发者可以上传自己写的包来实现特定问题的计算。</p>
+<p>Simon二阶段设计的样本量计算同样可以在R语言中轻松实现：<br>
+<strong>R Code如下：</strong></p>
+<pre><code class="language-R">install.packages(&quot;ph2mult&quot;)    #首先安装R包ph2mult
+library(ph2mult)                      #加载包
+binom.design(type = &quot;admissible&quot;, p0 = 0.05, p1 = 0.15, 
+             signif.level = 0.05, power.level = 0.8,
+             plot.out = TRUE)
+</code></pre>
+<p>其中：<br>
+type = &quot;admissible&quot;：列出推荐使用的样本量计算结果<br>
+p0 = 0.05：历史参照率值（二分类结局指标，如ORR）<br>
+p1 = 0.15：预估本试验的率值<br>
+signif.level = 0.05：单侧α为0.05（Simon二阶段设计默认为单侧检验）<br>
+power.level = 0.8：检验效能为0.8，对应β为0.2<br>
+plot.out = TRUE：生成以总样本量为横坐标、期望样本量为纵坐标的折线图</p>
+<p><strong>结果如下：</strong><br>
+<img src="https://VicyCao.github.io/post-images/1615279531395.JPG" alt="" loading="lazy"><br>
+以Optimal设计为例，试验设计流程如下：<br>
+<strong>第一阶段需入组23人，若≤1人出现缓解，试验停止，若＞1人出现缓解，试验进入第二阶段；第二阶段需入组33人，若在所有的56名患者中（包括第一阶段和第二阶段），有≤5人出现缓解，则试验失败，若＞5人出现缓解，则试验成功。</strong></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Cox回归分析中的一个小问题：“打结”时间]]></title>
         <id>https://VicyCao.github.io/post/cox-hui-gui-fen-xi-zhong-de-yi-ge-xiao-wen-ti-da-jie-shi-jian/</id>
