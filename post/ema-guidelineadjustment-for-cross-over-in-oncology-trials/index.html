@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>EMA Guideline：adjustment for cross-over in oncology trials | VicyCao</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://VicyCao.github.io/favicon.ico?v=1616550915009">
+<link rel="stylesheet" href="https://VicyCao.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="肿瘤临床试验中，有一个很常见的现象就是，对照组的患者如果肿瘤出现进展，出组后由于伦理等方面的考量很可能会使用试验组的药物继续治疗，此时，当整个研究结束在评估OS的时候，从严谨的角度必须考虑转组校正的问题，今天我们就基于EMA的指导原则聊聊这..." />
+    <meta name="keywords" content="指南解读" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://VicyCao.github.io">
+        <img src="https://VicyCao.github.io/images/avatar.png?v=1616550915009" class="site-logo">
+        <h1 class="site-title">VicyCao</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://VicyCao.github.io/archives" class="site-nav">
+            文章
+          </a>
+        
+      
+        
+          <a href="https://VicyCao.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      一名非典型生物统计师
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://VicyCao.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">EMA Guideline：adjustment for cross-over in oncology trials</h2>
+            <div class="post-date">2021-03-20</div>
+            
+            <div class="post-content" v-pre>
+              <p>肿瘤临床试验中，有一个很常见的现象就是，对照组的患者如果肿瘤出现进展，出组后由于伦理等方面的考量很可能会使用试验组的药物继续治疗，此时，当整个研究结束在评估OS的时候，从严谨的角度必须考虑转组校正的问题，今天我们就基于EMA的指导原则聊聊这个话题。</p>
+<!-- more -->
+<p>2020年12月31日，BMS宣布撤销Opdivo在美国的SCLC适应症。<br>
+2021年02月22日，AZ宣布撤销Imfinzi在美国的膀胱癌适应症。<br>
+2021年03月01日，MSD宣布撤销Keytruda在美国的SCLC适应症。<br>
+2021年03月08日，Roche宣布撤销Tecentrip在美国的尿路上皮癌适应症。<br>
+PD-1/PD-L1接连撤回适应症，最重要的原因就是加速批准上市后的临床确证试验搞砸了，OS没有达到预期的获益。</p>
+<p>但现在有个很现实的问题是，在评估OS的时候会面临很多的挑战因素，其中之一就是对照组的转组治疗问题，在英文中常称之为cross-over，部分同行在中文中称为交叉治疗，为了和交叉设计区分开，本人一般称为转组治疗。</p>
+<p>针对这个问题，EMA早在2018年12月13日就通过了一份指导原则，讨论了面对这种情况时应该思考的问题与可行的解决办法。</p>
+<p><strong>疑问：</strong><br>
+1）在出现对照组使用试验药物治疗的情况下，使用哪些方法可以分析肿瘤试验中的时间事件型终点？<br>
+2）哪些方法是主流的分析方法，这些方法分别解决了哪些问题？<br>
+3）是否存在关于转组患者和未转组患者的基本假设？<br>
+4）有没有关于转组到试验组的假设？<br>
+5）还有其他与结果解释相关的重要假设吗？<br>
+6）不同的转组情况下有对应的更好的分析方法吗？<br>
+7）这些分析方法监管机构在做审评决定的时候会充分考虑吗？</p>
+<p><strong>解答：</strong><br>
+在肿瘤学试验中，可能发生对照组患者向试验组的单向转组，比如对照组患者在进展后的后续治疗。从方法学的角度看，不存在针对系统转组治疗的反对意见，系统性意味着有客观的标准来评判对照组患者是否需要接受试验药物的治疗。一个直观的例子是：当所有对照组患者在同一时间转组接受试验药物治疗（比如在中期分析后显示试验药物优效），但这种没有混杂的OS数据被认为不是评估有效性和安全性所必需的。系统转组治疗的另一个例子是：根据研究设计，当患者出现疾病进展或者达到其他可以反映疗效终点的指标时，对照组患者必须转组接受试验药物的治疗。<br>
+还有的情况是：当研究方案允许研究者酌情决定患者是否接受转组治疗时，此时可能会发生非系统性的转组治疗。该文件解决的就是转组治疗不是系统性的情况，基于试验组不会发生转组治疗以及试验药物不会给对照组的转组患者带来伤害的假设。我们应该完全有理由认为这种假设效应与监管决策有关，应当指出的是，由于下述方法所涉及的不确定性，目前，此类估计应主要用于支持性或敏感性分析。</p>
+<h2 id="一-方法的选择取决于所关注的问题"><strong>一、方法的选择取决于所关注的问题</strong></h2>
+<p>目前已有不少方法可用于校正转组后OS的评估结果，包括将转组患者标记为删失、IPCW法、RPSFT法以及two-stage法。<br>
+原则上，这些方法可以用于解决不同情境下的OS校正问题。比如，IPCW：在转组治疗并未发生但包括出组后的后续治疗，估计试验组相比对照组的治疗效果；RPSFT：可以针对选择评估试验组治疗效果，但在实践中，试验治疗的效果和后续治疗的效果通常是估计的。<br>
+因此，应该清楚哪个问题是相关的，以及所选分析如何回答相关问题。</p>
+<h2 id="二-不同校正方法的假设"><strong>二、不同校正方法的假设</strong></h2>
+<p>为了得出效果估计，调整方法必须进行假设，下面对方法的原理及假设进行简短描述。</p>
+<h3 id="将转组患者标记为删失"><strong>将转组患者标记为删失</strong></h3>
+<p>与在那个时间点没有转组并且在同一治疗组中的其他患者相比，对转组患者进行删失可以有效地估计未转组患者的生存率。因此，基本假设是，在时间t转组的对照组患者从时间t开始与在时间t继续接受对照组治疗的患者具有相同的OS预后（非信息删失）。这可能是一个合理的假设，例如，如果所有对照组患者在进行中期分析后都进行了转组治疗，通常，这是不现实的假设，因为转组治疗通常与患者的预后有关。例如，当患者在预后较好时进行转组治疗时，标记为删失会假设其生存时间与其他在预后上较差的患者的生存时间相同，因此低估了其生存时间。对于没有对照组患者转组治疗的假设情况，这会导致对OS治疗效果的高估。实际上，删失通常是保守的，因此不建议使用。下面讨论了其他方法以更好地说明信息删失，尽管它们仍需要特定的假设。</p>
+<h3 id="inverse-probability-of-censoring-weighting-ipcw"><strong>Inverse Probability of Censoring Weighting (IPCW)</strong></h3>
+<p>每次有对照组的患者接受试验组药物治疗时，IPCW会对该患者进行删失，并选择在指定特征（基线和基线后）方面相似的对照组患者，以更多的患者代替该患者。从技术上讲，增加其余对照组患者的权重，以有效构建具有与原始人群相似（基线和基线后）特征的模拟人群，但在该人群中未发生转组治疗。如果创建的模拟人群与原始人群的预后相同，这将仅提供无偏估计，并且这是无法检验的假设（因为是“没有无法衡量的混杂因素”的假设）。此外，在转组模式中应存在足够的异质性，因为基线和与时间相关的协变量不应该（或者接近）完美地预测转组治疗。因为如果这样做，IPCW中使用的权重将是（或者接近）无穷大，且该方法将失效。</p>
+<h3 id="rank-preserving-structural-failure-time-models-rpsft"><strong>Rank Preserving Structural Failure Time models (RPSFT)</strong></h3>
+<p>RPSFT模型假设每个患者都以自己的速度迈向死亡（加速失效时间模型）。无论是起初的随机分配还是转组治疗，试验药物都会以相同的因素使该速度减慢。然后，RPSFT将此减速因子应用于转组患者，以模拟如果这些患者未转组治疗将观察到的事件时间。由此估计不存在转组治疗的影响。<br>
+这种减慢因素不依赖于开始试验药物治疗的时间假设可能是有问题的。此外，RPSFT模型将生存时间计为“有”和“无”试验处理，以估算减速因子。选择后续治疗方法作为“非试验处理”方法，是假设这些治疗与对照组具有相同的效果，而考虑将后续试验药物治疗视为“试验处理”方法则估计了试验方法和后续治疗方法的平均效果。</p>
+<h3 id="two-stage-methods"><strong>Two-stage methods</strong></h3>
+<p>“两阶段”方法首先估计特定于转组治疗患者的效果（通过比较转组和未转组的对照患者），并使用此效果来调整转组患者的生存时间，以获取他们在未转组情况下的模拟生存时间。执行此操作的简化程序通过引入“辅助”基线，通常是基于进展时间。使用加速失效时间模型，根据对照组患者的进展后数据，估算从进展开始对照所有患者的治疗效果。还可以调整在进展时测得的协变量差异。所得的减速因子反过来应用于对照组发生转组治疗的患者，以获取未转组患者的模拟事件时间。与RPSFT相反，两阶段方法不需要相同治疗效果假设。更复杂的“两阶段”模型还将尝试调整次级基线与实际转组时间随时间产生的差异，而不仅限于次级基线。因此，需要的假设是简化模型在次要基线上“没有不可测量的混杂因素”假设，此外，对于更复杂的模型，还需要“没有不可测量的时间依赖型混杂因素”假设。</p>
+<h2 id="三-讨论"><strong>三、讨论</strong></h2>
+<p>通常，与“纯ITT”分析（不考虑转组治疗对OS的影响）相比，这些调整方法对在没有转组治疗影响的情况下偏倚较小，但它们通常并不更精确。 例如，RPSFT模型通常不会更改p值，尽管IPCW和“两阶段”方法可能会更改，但这三种方法的置信区间往往很宽。<br>
+哪种方法更合适取决于哪个假设对偏差估计最合理或最可靠。通常，基于来自对照组的数据对转组后的试验处理效果做出合理的假设是有挑战的，这是RPSFT调整的局限性。至于IPCW和“两阶段”方法，许多“主观”因素会影响医生选择要转组的患者。因此，在实践中几乎不可能令人信服地证明“没有无法衡量的混杂因素假设”，因为它要求在试验的适当时间点反复确定转组的一系列影响因素。</p>
+<h2 id="四-结论"><strong>四、结论</strong></h2>
+<p>原则上，科学的问题指导科学的分析，并且应该充分证明所选择的问题是与监管决策相关的问题。如果没有发生转组，则以生存结果为目标应讨论，为什么在试验结束时优先考虑这种方法而不是对生存进行评估而不考虑转组的重要性（或对重要性具体讨论）。如果可以证明感兴趣的监管或临床问题是在没有转组情况下的生存结果，那么需要进行仔细的讨论。包括：a）所选分析方法的关键基础假设是否合理；b）在当前假设下，这些方法的潜在偏倚是否足够小；c）在与这些假设有实际偏差的情况下，这些方法是否合理；d）辅助证据（例如作用机理）。<br>
+鉴于原则上不能证明上述转组调整方法的基本假设是正确的，因此针对转组调整后的分析，得出的结果肯定不能用于挽救其他证据为阴性的试验。或者在可验证假设的分析中，不能明显发现某种治疗可带来OS获益时，例如使用每个患者观察到的OS结局的“ ITT分析”。<br>
+出于这些原因，这些分析仅可作为支持性或敏感性分析以用于监管目的，因为明显偏离了基本假设的稳健性。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://VicyCao.github.io/tag/EQvYTgXgl/" class="tag">
+                    指南解读
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://VicyCao.github.io/post/r/">
+                  <h3 class="post-title">
+                    R code：二阶段设计的样本量计算
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
