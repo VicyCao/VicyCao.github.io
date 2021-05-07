@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>R code：二阶段设计的样本量计算 | VicyCao</title>
+<title>SAS code：使用Clopper-Pearson计算95%置信区间 | VicyCao</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,9 +18,7 @@
 
 
 
-    <meta name="description" content="由于可以提前因无效终止试验，Simon二阶段设计很受临床医生的欢迎，如何在开源软件R语言中计算Simon二阶段设计的样本量呢？
-
-R语言因开源、灵活得以在临床试验中广泛使用，其中最突出的优点就是开发者可以上传自己写的包来实现特定问题的计算。..." />
+    <meta name="description" content="日常工作中，经常接到医学组同学的需求，就是计算ORR或DCR的95%置信区间，置信区间目前有很多的计算方法，用的比较多的有正态近似法，但这个方法在样本量比较小的情况下显得有些无力，特别是当ORR接近0或100时，若使用正态近似法，很有可能计..." />
     <meta name="keywords" content="代码示例" />
   </head>
   <body>
@@ -86,32 +84,34 @@ R语言因开源、灵活得以在临床试验中广泛使用，其中最突出�
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">R code：二阶段设计的样本量计算</h2>
-            <div class="post-date">2021-02-12</div>
+            <h2 class="post-title">SAS code：使用Clopper-Pearson计算95%置信区间</h2>
+            <div class="post-date">2021-04-10</div>
             
             <div class="post-content" v-pre>
-              <p>由于可以提前因无效终止试验，Simon二阶段设计很受临床医生的欢迎，如何在开源软件R语言中计算Simon二阶段设计的样本量呢？</p>
+              <p>日常工作中，经常接到医学组同学的需求，就是计算ORR或DCR的95%置信区间，置信区间目前有很多的计算方法，用的比较多的有正态近似法，但这个方法在样本量比较小的情况下显得有些无力，特别是当ORR接近0或100时，若使用正态近似法，很有可能计算出的置信区间上限大于100或下限小于0，这个时候就需要使用Clopper-Pearson方法计算95%的置信区间了。</p>
 <!-- more -->
-<p>R语言因开源、灵活得以在临床试验中广泛使用，其中最突出的优点就是开发者可以上传自己写的包来实现特定问题的计算。</p>
-<p>Simon二阶段设计的样本量计算同样可以在R语言中轻松实现：<br>
-<strong>R Code如下：</strong></p>
-<pre><code class="language-R">install.packages(&quot;ph2mult&quot;)    #首先安装R包ph2mult
-library(ph2mult)                      #加载包
-binom.design(type = &quot;admissible&quot;, p0 = 0.05, p1 = 0.15, 
-             signif.level = 0.05, power.level = 0.8,
-             plot.out = TRUE)
+<p>目前有很多软件可以实现使用Clopper-Pearson计算95%置信区间，包括SPSS、Stata、SAS等，其中，SPSS对没有编程基础的同志比较友好，只需要通过傻瓜式的点击操作就可以实现Clopper-Pearson法计算置信区间，但有个小瑕疵就是，SPSS计算出来的置信区间只能保留到小数点后一位，如果对小数点后面的位数有更精确的要求，SPSS有点无能为力，但应付日常的计算完全足够了。</p>
+<p>今天主要给大家展示的是SAS代码，通过运行此段代码可以很轻松的计算95%置信区间。<br>
+<strong>SAS code如下：</strong></p>
+<pre><code class="language-SAS">proc freq data=Response;
+    tables ORR /binomial(exact level=&quot;1&quot;) alpha=0.05;
+run;
 </code></pre>
-<p>其中：<br>
-type = &quot;admissible&quot;：列出推荐使用的样本量计算结果<br>
-p0 = 0.05：历史参照率值（二分类结局指标，如ORR）<br>
-p1 = 0.15：预估本试验的率值<br>
-signif.level = 0.05：单侧α为0.05（Simon二阶段设计默认为单侧检验）<br>
-power.level = 0.8：检验效能为0.8，对应β为0.2<br>
-plot.out = TRUE：生成以总样本量为横坐标、期望样本量为纵坐标的折线图</p>
-<p><strong>结果如下：</strong><br>
-<img src="https://VicyCao.github.io/post-images/1615279531395.JPG" alt="" loading="lazy"><br>
-以Optimal设计为例，试验设计流程如下：<br>
-<strong>第一阶段需入组23人，若≤1人出现缓解，试验停止，若＞1人出现缓解，试验进入第二阶段；第二阶段需入组33人，若在所有的56名患者中（包括第一阶段和第二阶段），有≤5人出现缓解，则试验失败，若＞5人出现缓解，则试验成功。</strong></p>
+<p><strong>说明：</strong><br>
+Response为数据集，包含ORR这个变量<br>
+exact表示使用Clopper-Pearson精确法计算95%置信区间<br>
+level=&quot;1&quot;表示ORR等于1的时候此例患者达到CR或PR<br>
+alpha=0.05代表此时计算的是95%置信区间，如果alpha=0.10，将计算90%置信区间</p>
+<p>如果有两组，此时可以增加一行代码实现每组ORR的95%置信区间计算，但是注意要先对Group排序。</p>
+<pre><code class="language-SAS">proc sort data=Response;
+    by Group;
+run;
+proc freq data=Response;
+    tables ORR /binomial(exact level=&quot;1&quot;) alpha=0.05;
+    by Group;
+run;
+</code></pre>
+<p>最后说明一下：SAS计算出来的95%置信区间可以精确到小数点后两位。</p>
 
             </div>
             
@@ -126,9 +126,9 @@ plot.out = TRUE：生成以总样本量为横坐标、期望样本量为纵坐�
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://VicyCao.github.io/post/cox-hui-gui-fen-xi-zhong-de-yi-ge-xiao-wen-ti-da-jie-shi-jian/">
+                <a href="https://VicyCao.github.io/post/ema-guidelineadjustment-for-cross-over-in-oncology-trials/">
                   <h3 class="post-title">
-                    Cox回归分析中的一个小问题：“打结”时间
+                    EMA Guideline：adjustment for cross-over in oncology trials
                   </h3>
                 </a>
               </div>

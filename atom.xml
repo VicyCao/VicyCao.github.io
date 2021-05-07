@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://VicyCao.github.io</id>
     <title>VicyCao</title>
-    <updated>2021-03-24T01:56:01.886Z</updated>
+    <updated>2021-05-07T07:23:15.645Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://VicyCao.github.io"/>
     <link rel="self" href="https://VicyCao.github.io/atom.xml"/>
@@ -10,6 +10,40 @@
     <logo>https://VicyCao.github.io/images/avatar.png</logo>
     <icon>https://VicyCao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, VicyCao</rights>
+    <entry>
+        <title type="html"><![CDATA[SAS code：使用Clopper-Pearson计算95%置信区间]]></title>
+        <id>https://VicyCao.github.io/post/sas-codeshi-yong-clopper-pearson-ji-suan-95zhi-xin-qu-jian/</id>
+        <link href="https://VicyCao.github.io/post/sas-codeshi-yong-clopper-pearson-ji-suan-95zhi-xin-qu-jian/">
+        </link>
+        <updated>2021-04-10T06:47:45.000Z</updated>
+        <summary type="html"><![CDATA[<p>日常工作中，经常接到医学组同学的需求，就是计算ORR或DCR的95%置信区间，置信区间目前有很多的计算方法，用的比较多的有正态近似法，但这个方法在样本量比较小的情况下显得有些无力，特别是当ORR接近0或100时，若使用正态近似法，很有可能计算出的置信区间上限大于100或下限小于0，这个时候就需要使用Clopper-Pearson方法计算95%的置信区间了。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>日常工作中，经常接到医学组同学的需求，就是计算ORR或DCR的95%置信区间，置信区间目前有很多的计算方法，用的比较多的有正态近似法，但这个方法在样本量比较小的情况下显得有些无力，特别是当ORR接近0或100时，若使用正态近似法，很有可能计算出的置信区间上限大于100或下限小于0，这个时候就需要使用Clopper-Pearson方法计算95%的置信区间了。</p>
+<!-- more -->
+<p>目前有很多软件可以实现使用Clopper-Pearson计算95%置信区间，包括SPSS、Stata、SAS等，其中，SPSS对没有编程基础的同志比较友好，只需要通过傻瓜式的点击操作就可以实现Clopper-Pearson法计算置信区间，但有个小瑕疵就是，SPSS计算出来的置信区间只能保留到小数点后一位，如果对小数点后面的位数有更精确的要求，SPSS有点无能为力，但应付日常的计算完全足够了。</p>
+<p>今天主要给大家展示的是SAS代码，通过运行此段代码可以很轻松的计算95%置信区间。<br>
+<strong>SAS code如下：</strong></p>
+<pre><code class="language-SAS">proc freq data=Response;
+    tables ORR /binomial(exact level=&quot;1&quot;) alpha=0.05;
+run;
+</code></pre>
+<p><strong>说明：</strong><br>
+Response为数据集，包含ORR这个变量<br>
+exact表示使用Clopper-Pearson精确法计算95%置信区间<br>
+level=&quot;1&quot;表示ORR等于1的时候此例患者达到CR或PR<br>
+alpha=0.05代表此时计算的是95%置信区间，如果alpha=0.10，将计算90%置信区间</p>
+<p>如果有两组，此时可以增加一行代码实现每组ORR的95%置信区间计算，但是注意要先对Group排序。</p>
+<pre><code class="language-SAS">proc sort data=Response;
+    by Group;
+run;
+proc freq data=Response;
+    tables ORR /binomial(exact level=&quot;1&quot;) alpha=0.05;
+    by Group;
+run;
+</code></pre>
+<p>最后说明一下：SAS计算出来的95%置信区间可以精确到小数点后两位。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[EMA Guideline：adjustment for cross-over in oncology trials]]></title>
         <id>https://VicyCao.github.io/post/ema-guidelineadjustment-for-cross-over-in-oncology-trials/</id>
