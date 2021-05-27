@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://VicyCao.github.io</id>
     <title>VicyCao</title>
-    <updated>2021-05-07T07:24:26.668Z</updated>
+    <updated>2021-05-27T06:19:37.289Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://VicyCao.github.io"/>
     <link rel="self" href="https://VicyCao.github.io/atom.xml"/>
@@ -10,6 +10,29 @@
     <logo>https://VicyCao.github.io/images/avatar.png</logo>
     <icon>https://VicyCao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, VicyCao</rights>
+    <entry>
+        <title type="html"><![CDATA[正态近似法：单组目标值率类终点的样本量计算公式]]></title>
+        <id>https://VicyCao.github.io/post/zheng-tai-jin-si-fa-dan-zu-mu-biao-zhi-lu-lei-zhong-dian-de-yang-ben-liang-ji-suan-gong-shi/</id>
+        <link href="https://VicyCao.github.io/post/zheng-tai-jin-si-fa-dan-zu-mu-biao-zhi-lu-lei-zhong-dian-de-yang-ben-liang-ji-suan-gong-shi/">
+        </link>
+        <updated>2021-05-01T06:04:24.000Z</updated>
+        <summary type="html"><![CDATA[<p>单臂研究因样本量小受到临床医生的广泛欢迎，在单臂的肿瘤临床研究中，ORR是推荐使用的终点。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>单臂研究因样本量小受到临床医生的广泛欢迎，在单臂的肿瘤临床研究中，ORR是推荐使用的终点。</p>
+<!-- more -->
+<p>目前已经有商业软件可以实现单臂研究ORR终点的样本量计算，比如应用较为广泛的PASS软件等，如果没有软件可用，通过公式计算也可以快速得到样本量。</p>
+<p>使用正态近似法可以实现单组目标值的样本量估计，但使用正态近似法的前提是，期望的事件发生率不是极端的水平或者样本量较大，就可以使用正态近似法实现快速估计，如果需要更准确的估计结果，推荐使用二项分布的精确概率法。</p>
+<p>根据正态近似法计算单组目标值的样本量估计公式为：<br>
+<img src="https://VicyCao.github.io/post-images/1622096027740.JPG" alt="" loading="lazy"><br>
+<strong>其中：</strong><br>
+p<sub>1</sub>为预估率<br>
+p<sub>0</sub>为历史对照率<br>
+<strong>以下为必需参数及推荐使用的值：</strong><br>
+Z<sub>1-α</sub>=1.96  α取值0.025，对应的标准正态分布Z界值<br>
+Z<sub>1-β</sub>=0.84   β取值0.2，对应的标准正态分布Z界值</p>
+<p>通过这个公式，使用计算器就可以实现单组目标值率类终点的样本量计算。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SAS code：使用Clopper-Pearson计算95%置信区间]]></title>
         <id>https://VicyCao.github.io/post/sas-codeshi-yong-clopper-pearson-ji-suan-95zhi-xin-qu-jian/</id>

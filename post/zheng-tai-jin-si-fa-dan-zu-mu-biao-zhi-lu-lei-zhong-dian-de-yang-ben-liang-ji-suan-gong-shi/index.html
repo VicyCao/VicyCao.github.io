@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>SAS code：绘图模板重置 | VicyCao</title>
+<title>正态近似法：单组目标值率类终点的样本量计算公式 | VicyCao</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,12 +18,11 @@
 
 
 
-    <meta name="description" content="关注一个SAS绘图模板重置的小问题
+    <meta name="description" content="单臂研究因样本量小受到临床医生的广泛欢迎，在单臂的肿瘤临床研究中，ORR是推荐使用的终点。
 
-接触过SAS的童鞋都知道，SAS自带的绘图效果极丑（这里指不经proc sgplot或Macro修饰过的原图），具体感受可通过观看以下生存曲线图像获得：
-
-🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣�..." />
-    <meta name="keywords" content="代码示例" />
+目前已经有商业软件可以实现单臂研究ORR终点的样本量计算，比如应用较为广泛的PASS软件等，如果没有软件可用，通过公式计算也可以快速得到样本量。
+..." />
+    <meta name="keywords" content="正经课堂" />
   </head>
   <body>
     <div id="app" class="main">
@@ -88,32 +87,30 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">SAS code：绘图模板重置</h2>
-            <div class="post-date">2021-02-09</div>
+            <h2 class="post-title">正态近似法：单组目标值率类终点的样本量计算公式</h2>
+            <div class="post-date">2021-05-01</div>
             
             <div class="post-content" v-pre>
-              <p>关注一个SAS绘图模板重置的小问题</p>
+              <p>单臂研究因样本量小受到临床医生的广泛欢迎，在单臂的肿瘤临床研究中，ORR是推荐使用的终点。</p>
 <!-- more -->
-<p>接触过SAS的童鞋都知道，SAS自带的绘图效果极丑（这里指不经proc sgplot或Macro修饰过的原图），具体感受可通过观看以下生存曲线图像获得：<br>
-<img src="https://VicyCao.github.io/post-images/1612600347491.png" alt="" loading="lazy"><br>
-🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣</p>
-<p>有时为了做大会的壁报或者文章投稿需要，会编写SAS的Macro重新绘制颜值较高的生存曲线图像，此时会发现后续只要跑proc lifetest程序，SAS的HTML输出页面就都是Macro设置的图像样式，这时候想查看SAS原始自带的图像就有点犯难，毕竟有些奇葩杂志会要求提供未经修饰的SAS原图作为投稿的补充材料。</p>
-<p>这个时候部门的MA小伙伴就满眼期待地望着我，希望我能帮忙提供原始图像。在我第一次遇到MA小伙伴求助此类问题时，我的内心是慌张的，毕竟我都跑过那么多次Macro了，原始图像的样式早就模糊了，也不知道从哪里再倒腾出来，但还是要干啊，通过查资料，发现几行代码就可以解决这个小问题：</p>
-<p><strong>SAS code如下：</strong></p>
-<pre><code class="language-SAS">ods path sashelp.tmplmst (read);
-proc datasets library=sasuser nolist;
-    delete templat (memtype=itemstor);
-run;
-ods path reset;
-</code></pre>
-<p>虽然是个小问题，但是觉得还是值得记录一下的，SAS大佬请忽略😂</p>
+<p>目前已经有商业软件可以实现单臂研究ORR终点的样本量计算，比如应用较为广泛的PASS软件等，如果没有软件可用，通过公式计算也可以快速得到样本量。</p>
+<p>使用正态近似法可以实现单组目标值的样本量估计，但使用正态近似法的前提是，期望的事件发生率不是极端的水平或者样本量较大，就可以使用正态近似法实现快速估计，如果需要更准确的估计结果，推荐使用二项分布的精确概率法。</p>
+<p>根据正态近似法计算单组目标值的样本量估计公式为：<br>
+<img src="https://VicyCao.github.io/post-images/1622096027740.JPG" alt="" loading="lazy"><br>
+<strong>其中：</strong><br>
+p<sub>1</sub>为预估率<br>
+p<sub>0</sub>为历史对照率<br>
+<strong>以下为必需参数及推荐使用的值：</strong><br>
+Z<sub>1-α</sub>=1.96  α取值0.025，对应的标准正态分布Z界值<br>
+Z<sub>1-β</sub>=0.84   β取值0.2，对应的标准正态分布Z界值</p>
+<p>通过这个公式，使用计算器就可以实现单组目标值率类终点的样本量计算。</p>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://VicyCao.github.io/tag/KPObp76E1/" class="tag">
-                    代码示例
+                  <a href="https://VicyCao.github.io/tag/Sm4J3d9D8/" class="tag">
+                    正经课堂
                   </a>
                 
               </div>
@@ -121,9 +118,9 @@ ods path reset;
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://VicyCao.github.io/post/ema-guidelineclinical-trials-in-small-populations/">
+                <a href="https://VicyCao.github.io/post/sas-codeshi-yong-clopper-pearson-ji-suan-95zhi-xin-qu-jian/">
                   <h3 class="post-title">
-                    EMA Guideline：Clinical Trials in Small Populations
+                    SAS code：使用Clopper-Pearson计算95%置信区间
                   </h3>
                 </a>
               </div>
